@@ -17,11 +17,12 @@ export default function Onboarding({
   return (
     <div
       style={{
-        position: "absolute",
+        position: "fixed",
         inset: 0,
         display: "flex",
         flexDirection: "column",
         zIndex: 100,
+        paddingTop: "env(safe-area-inset-top)",
         paddingBottom: "env(safe-area-inset-bottom)",
       }}
     >
