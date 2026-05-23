@@ -61,13 +61,15 @@ export default function Page() {
 
   useLayoutEffect(() => {
     const t = THEMES[state.theme] ?? THEMES.mint;
+    // Apply gradient to every layer so no corner shows a different color
     document.documentElement.style.background = t.bg;
+    document.documentElement.style.backgroundAttachment = "fixed";
     document.body.style.background = t.bg;
-    // Keep Safari browser chrome / overscroll area neutral
+    document.body.style.backgroundAttachment = "fixed";
+    // theme-color: use the swatch top-right color so status bar blends on both sides
     let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "theme-color"; document.head.appendChild(meta); }
-    const firstColor = t.bg.match(/#[0-9a-fA-F]{3,6}/)?.[0] ?? "#e7f7ef";
-    meta.content = firstColor;
+    meta.content = t.swatch[0];
   }, [state.theme]);
 
   const handleReset = () => {
