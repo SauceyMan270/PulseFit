@@ -74,7 +74,7 @@ export default function Page() {
     // iOS uses background-color to fill the home-indicator zone (outside the
     // gradient's paint box). Using the last color stop — regardless of whether it
     // is explicitly labeled 100% — ensures any gradient shape works correctly.
-    const endColor = [...t.bg.matchAll(/#[0-9a-fA-F]+/g)].pop()?.[0] ?? t.swatch[1];
+    const endColor = Array.from(t.bg.matchAll(/#[0-9a-fA-F]+/g)).pop()?.[0] ?? t.swatch[1];
     document.documentElement.style.background = t.bg;
     document.documentElement.style.backgroundColor = endColor;
     document.body.style.background = t.bg;
