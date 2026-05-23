@@ -29,8 +29,6 @@ export default function BottomNav({
         padding: "0 16px",
         paddingBottom: "calc(14px + env(safe-area-inset-bottom))",
         pointerEvents: "none",
-        // Fill the home-indicator safe area with the theme gradient so no harsh line
-        background: "linear-gradient(to top, var(--nav-bg) 0%, transparent 100%)",
       }}
     >
       <div
