@@ -102,6 +102,11 @@ export default function Page() {
   const theme = THEMES[state.theme] ?? THEMES.mint;
   const Active = tabMap[state.tab];
 
+  // Extract solid start/end colors from the gradient for iOS safe-area fills
+  // (background-attachment:fixed is unsupported on iOS Safari)
+  const fillTop = theme.bg.match(/(#[0-9a-fA-F]+)\s+0%/)?.[1] ?? theme.swatch[0];
+  const fillBottom = theme.bg.match(/(#[0-9a-fA-F]+)\s+100%/)?.[1] ?? theme.swatch[1];
+
   return (
     <div
       style={{
@@ -180,9 +185,9 @@ export default function Page() {
 
       {state.toast && <PopEffect msg={state.toast} onDone={() => dispatch({ type: "clearToast" })} />}
 
-      {/* safe-area fills — cover status bar + home indicator zones on iOS PWA */}
-      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "env(safe-area-inset-top)", background: theme.bg, backgroundAttachment: "fixed", zIndex: 5 }} />
-      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, height: "env(safe-area-inset-bottom)", background: theme.bg, backgroundAttachment: "fixed", zIndex: 5 }} />
+      {/* safe-area fills — solid colors matching gradient edges, avoids iOS background-attachment:fixed bug */}
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "env(safe-area-inset-top)", background: fillTop, zIndex: 5 }} />
+      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, height: "env(safe-area-inset-bottom)", background: fillBottom, zIndex: 5 }} />
     </div>
   );
 }
