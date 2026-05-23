@@ -19,16 +19,15 @@ export default function Onboarding({
       style={{
         position: "absolute",
         inset: 0,
-        background: "linear-gradient(165deg, #e7f7ef 0%, #e3f1fb 55%, #f3ecfb 100%)",
         display: "flex",
         flexDirection: "column",
         zIndex: 100,
-        overflow: "hidden",
+        paddingBottom: "env(safe-area-inset-bottom)",
       }}
     >
       {/* ambient blobs */}
-      <div className="blob" style={{ width: 220, height: 220, background: "#7fe3b8", top: -60, right: -50 }} />
-      <div className="blob" style={{ width: 200, height: 200, background: "#9fcef5", bottom: 40, left: -60 }} />
+      <div className="blob" style={{ width: 220, height: 220, background: "var(--accent)", top: -60, right: -50 }} />
+      <div className="blob" style={{ width: 200, height: 200, background: "var(--accent-2)", bottom: 40, left: -60 }} />
 
       <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 30px" }}>
         {step === 0 && (
