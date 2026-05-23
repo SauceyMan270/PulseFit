@@ -1,24 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Icon from "./Icon";
 import PillBtn from "./PillBtn";
 import { icons } from "@/lib/icons";
 
 export default function Onboarding({
   onSubmit,
+  bg,
+  endColor,
 }: {
   onSubmit: (name: string, weightUnit: "lbs" | "kg") => void;
+  bg: string;
+  endColor: string;
 }) {
   const [step, setStep] = useState<0 | 1 | 2>(0);
   const [name, setName] = useState("");
   const [weightUnit, setWeightUnit] = useState<"lbs" | "kg">("lbs");
+
+  useLayoutEffect(() => {
+    document.documentElement.style.background = bg;
+    document.documentElement.style.backgroundColor = endColor;
+    document.body.style.background = bg;
+    document.body.style.backgroundColor = endColor;
+  }, [bg, endColor]);
 
   return (
     <div
       style={{
         position: "fixed",
         inset: 0,
+        background: bg,
         display: "flex",
         flexDirection: "column",
         zIndex: 100,

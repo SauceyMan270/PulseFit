@@ -117,7 +117,11 @@ export default function Page() {
       }}
     >
       {!state.onboarded ? (
-        <Onboarding onSubmit={(name, weightUnit) => dispatch({ type: "completeOnboarding", firstName: name, weightUnit })} />
+        <Onboarding
+          onSubmit={(name, weightUnit) => dispatch({ type: "completeOnboarding", firstName: name, weightUnit })}
+          bg={theme.bg}
+          endColor={Array.from(theme.bg.matchAll(/#[0-9a-fA-F]+/g)).pop()?.[0] ?? theme.swatch[1]}
+        />
       ) : state.activeWorkout ? (
         <ActiveWorkoutScreen
           workout={state.activeWorkout}
