@@ -26,27 +26,23 @@
   --shadow-soft: 0 8px 22px -14px rgba(45,99,80,0.28);
 }
 
-html {
-  height: 100%;
-  overflow: hidden;
-  background: linear-gradient(165deg, #e7f7ef 0%, #e3f1fb 55%, #f3ecfb 100%);
-  background-attachment: fixed;
-}
-
+html,
 body {
   padding: 0;
   margin: 0;
-  /* position:fixed kills iOS rubber-band scroll that exposes the body beneath fixed elements */
-  position: fixed;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto;
   background: linear-gradient(165deg, #e7f7ef 0%, #e3f1fb 55%, #f3ecfb 100%);
-  background-attachment: fixed;
+  /* background shorthand resets background-color to transparent.
+     Re-declare it explicitly so iOS uses this color to paint the home-indicator
+     zone (outside the gradient's box). Default = mint 100% stop. */
+  background-color: #f3ecfb;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overscroll-behavior: none;
 }
 
 * { box-sizing: border-box; }

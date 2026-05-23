@@ -70,8 +70,15 @@ export default function Page() {
 
   useLayoutEffect(() => {
     const t = THEMES[state.theme] ?? THEMES.mint;
+    // Extract the 100%-stop color to use as background-color fallback.
+    // The gradient only paints inside the element's box; iOS uses background-color
+    // to fill the home-indicator zone (outside the box). Without this, it falls
+    // back to transparent → white strip.
+    const endColor = t.bg.match(/(#[0-9a-fA-F]+)\s+100%/)?.[1] ?? t.swatch[1];
     document.documentElement.style.background = t.bg;
+    document.documentElement.style.backgroundColor = endColor;
     document.body.style.background = t.bg;
+    document.body.style.backgroundColor = endColor;
     let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "theme-color"; document.head.appendChild(meta); }
     meta.content = t.swatch[0];
@@ -103,12 +110,7 @@ export default function Page() {
     <div
       style={{
         position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        // Extend past the visual viewport bottom so the gradient covers the
-        // home indicator zone on iOS PWA (fixed;bottom:0 stops above it).
-        bottom: "calc(-1 * env(safe-area-inset-bottom))",
+        inset: 0,
         background: theme.bg,
         overflow: "hidden",
         ...(theme.vars as React.CSSProperties),
