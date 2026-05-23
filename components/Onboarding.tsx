@@ -26,10 +26,6 @@ export default function Onboarding({
         paddingBottom: "env(safe-area-inset-bottom)",
       }}
     >
-      {/* safe-area fills — solid colors matching gradient start/end to avoid iOS background-attachment:fixed bug */}
-      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "env(safe-area-inset-top)", background: "#e7f7ef", zIndex: 5 }} />
-      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, height: "env(safe-area-inset-bottom)", background: "#f3ecfb", zIndex: 5 }} />
-
       {/* ambient blobs */}
       <div className="blob" style={{ width: 220, height: 220, background: "var(--accent)", top: -60, right: -50 }} />
       <div className="blob" style={{ width: 200, height: 200, background: "var(--accent-2)", bottom: 40, left: -60 }} />

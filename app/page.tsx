@@ -70,12 +70,16 @@ export default function Page() {
 
   useLayoutEffect(() => {
     const t = THEMES[state.theme] ?? THEMES.mint;
-    // Apply gradient to every layer so no corner shows a different color
     document.documentElement.style.background = t.bg;
     document.documentElement.style.backgroundAttachment = "fixed";
     document.body.style.background = t.bg;
     document.body.style.backgroundAttachment = "fixed";
-    // theme-color: use the swatch top-right color so status bar blends on both sides
+    // Paint the bottom safe-area (home indicator) with the gradient end color.
+    // background shorthand resets background-color to transparent; set it explicitly
+    // so iOS uses it to fill the home indicator zone outside the gradient's box.
+    const endColor = t.bg.match(/(#[0-9a-fA-F]+)\s+100%/)?.[1] ?? t.swatch[1];
+    document.documentElement.style.backgroundColor = endColor;
+    document.body.style.backgroundColor = endColor;
     let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "theme-color"; document.head.appendChild(meta); }
     meta.content = t.swatch[0];
@@ -102,10 +106,6 @@ export default function Page() {
   const theme = THEMES[state.theme] ?? THEMES.mint;
   const Active = tabMap[state.tab];
 
-  // Extract solid start/end colors from the gradient for iOS safe-area fills
-  // (background-attachment:fixed is unsupported on iOS Safari)
-  const fillTop = theme.bg.match(/(#[0-9a-fA-F]+)\s+0%/)?.[1] ?? theme.swatch[0];
-  const fillBottom = theme.bg.match(/(#[0-9a-fA-F]+)\s+100%/)?.[1] ?? theme.swatch[1];
 
   return (
     <div
@@ -184,10 +184,6 @@ export default function Page() {
       )}
 
       {state.toast && <PopEffect msg={state.toast} onDone={() => dispatch({ type: "clearToast" })} />}
-
-      {/* safe-area fills — solid colors matching gradient edges, avoids iOS background-attachment:fixed bug */}
-      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "env(safe-area-inset-top)", background: fillTop, zIndex: 5 }} />
-      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, height: "env(safe-area-inset-bottom)", background: fillBottom, zIndex: 5 }} />
     </div>
   );
 }
