@@ -66,7 +66,8 @@ export default function Page() {
     // Keep Safari browser chrome / overscroll area neutral
     let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "theme-color"; document.head.appendChild(meta); }
-    meta.content = t.bg.includes("#ffffff") ? "#ffffff" : "#f5f5f5";
+    const firstColor = t.bg.match(/#[0-9a-fA-F]{3,6}/)?.[0] ?? "#e7f7ef";
+    meta.content = firstColor;
   }, [state.theme]);
 
   const handleReset = () => {
