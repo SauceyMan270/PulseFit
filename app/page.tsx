@@ -71,15 +71,7 @@ export default function Page() {
   useLayoutEffect(() => {
     const t = THEMES[state.theme] ?? THEMES.mint;
     document.documentElement.style.background = t.bg;
-    document.documentElement.style.backgroundAttachment = "fixed";
     document.body.style.background = t.bg;
-    document.body.style.backgroundAttachment = "fixed";
-    // Paint the bottom safe-area (home indicator) with the gradient end color.
-    // background shorthand resets background-color to transparent; set it explicitly
-    // so iOS uses it to fill the home indicator zone outside the gradient's box.
-    const endColor = t.bg.match(/(#[0-9a-fA-F]+)\s+100%/)?.[1] ?? t.swatch[1];
-    document.documentElement.style.backgroundColor = endColor;
-    document.body.style.backgroundColor = endColor;
     let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "theme-color"; document.head.appendChild(meta); }
     meta.content = t.swatch[0];
@@ -111,7 +103,12 @@ export default function Page() {
     <div
       style={{
         position: "fixed",
-        inset: 0,
+        top: 0,
+        left: 0,
+        right: 0,
+        // Extend past the visual viewport bottom so the gradient covers the
+        // home indicator zone on iOS PWA (fixed;bottom:0 stops above it).
+        bottom: "calc(-1 * env(safe-area-inset-bottom))",
         background: theme.bg,
         overflow: "hidden",
         ...(theme.vars as React.CSSProperties),
