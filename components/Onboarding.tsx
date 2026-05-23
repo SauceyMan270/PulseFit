@@ -26,6 +26,10 @@ export default function Onboarding({
         paddingBottom: "env(safe-area-inset-bottom)",
       }}
     >
+      {/* safe-area fills */}
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "env(safe-area-inset-top)", background: "linear-gradient(165deg, #e7f7ef 0%, #e3f1fb 55%, #f3ecfb 100%)", backgroundAttachment: "fixed", zIndex: 5 }} />
+      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, height: "env(safe-area-inset-bottom)", background: "linear-gradient(165deg, #e7f7ef 0%, #e3f1fb 55%, #f3ecfb 100%)", backgroundAttachment: "fixed", zIndex: 5 }} />
+
       {/* ambient blobs */}
       <div className="blob" style={{ width: 220, height: 220, background: "var(--accent)", top: -60, right: -50 }} />
       <div className="blob" style={{ width: 200, height: 200, background: "var(--accent-2)", bottom: 40, left: -60 }} />
