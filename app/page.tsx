@@ -55,6 +55,15 @@ export default function Page() {
     setHydrated(true);
   }, []);
 
+  // iOS PWA: after keyboard dismisses, the body scroll offset stays non-zero
+  // which offsets position:fixed elements and reveals the background beneath.
+  // Force scroll to 0 whenever window resizes (keyboard open/close).
+  useEffect(() => {
+    const onResize = () => { window.scrollTo(0, 0); document.body.scrollTop = 0; };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   useEffect(() => {
     if (hydrated) saveState(state);
   }, [state, hydrated]);
