@@ -1,0 +1,10 @@
+{
+  "name": "Pulse",
+  "short_name": "Pulse",
+  "description": "A bright, friendly fitness companion.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e7f7ef",
+  "theme_color": "#34c98a",
+  "icons": []
+}
