@@ -70,11 +70,11 @@ export default function Page() {
 
   useLayoutEffect(() => {
     const t = THEMES[state.theme] ?? THEMES.mint;
-    // Extract the 100%-stop color to use as background-color fallback.
-    // The gradient only paints inside the element's box; iOS uses background-color
-    // to fill the home-indicator zone (outside the box). Without this, it falls
-    // back to transparent → white strip.
-    const endColor = t.bg.match(/(#[0-9a-fA-F]+)\s+100%/)?.[1] ?? t.swatch[1];
+    // Extract the last hex color in the gradient for the background-color fallback.
+    // iOS uses background-color to fill the home-indicator zone (outside the
+    // gradient's paint box). Using the last color stop — regardless of whether it
+    // is explicitly labeled 100% — ensures any gradient shape works correctly.
+    const endColor = [...t.bg.matchAll(/#[0-9a-fA-F]+/g)].pop()?.[0] ?? t.swatch[1];
     document.documentElement.style.background = t.bg;
     document.documentElement.style.backgroundColor = endColor;
     document.body.style.background = t.bg;

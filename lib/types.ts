@@ -100,7 +100,7 @@ export const THEMES: Record<ThemeName, {
   },
   mono: {
     label: "Mono",
-    bg: "linear-gradient(165deg, #ffffff 0%, #b0b0b0 48%, #1a1a1a 80%)",
+    bg: "linear-gradient(165deg, #ffffff 0%, #b0b0b0 48%, #1a1a1a 80%, #1a1a1a 100%)",
     swatch: ["#1a1a1a", "#888888"],
     vars: {
       "--accent": "#1a1a1a", "--accent-soft": "#e0e0e0", "--accent-text": "#000000",
